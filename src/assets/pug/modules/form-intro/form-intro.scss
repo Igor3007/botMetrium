@@ -1,0 +1,38 @@
+.page-intro {
+    &__logo {
+        padding-bottom: 24px;
+
+        & img {
+            max-width: 165px;
+            margin: 0 auto;
+        }
+    }
+
+    &__title {
+        text-align: center;
+        margin-bottom: 12px;
+
+        & h3 {
+            margin-top: 0 !important;
+            padding-right: 0 !important;
+             
+        }
+    }
+
+    &__desc{
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    padding-bottom: 32px;
+    }
+
+    &__buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+    }
+
+
+}
