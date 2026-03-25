@@ -482,4 +482,8 @@ span[data-color=fff] {
 	border-left: 2px solid #f00f0f;
 	color: #f00f0f;
     margin-top: 15px;
+
+    & p {
+        margin: 0;
+    }
 }

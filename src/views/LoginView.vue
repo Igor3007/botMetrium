@@ -96,6 +96,9 @@ div.form-template-center
             :disabled="loading"
           )
             span {{ loading ? 'Вход...' : 'Войти' }}
+
+        .modal__item.text-to-home
+          router-link(to="/"): span На главную
 </template>
 
 <style scoped>

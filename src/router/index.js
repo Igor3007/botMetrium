@@ -24,6 +24,11 @@ const router = createRouter({
       name: 'chat',
       component: () => import('../views/ChatView.vue'),
     },
+    {
+      path: '/thanks',
+      name: 'thanks',
+      component: () => import('../views/RegistrationSuccess.vue'),
+    },
   ],
 })
 
