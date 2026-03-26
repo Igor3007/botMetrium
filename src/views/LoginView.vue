@@ -10,7 +10,8 @@ export default {
         password: ''
       },
       error: '',
-      loading: false
+      loading: false,
+      preload: true
     }
   },
 
@@ -18,6 +19,8 @@ export default {
       if(localStorage.getItem('token')) {
         this.$router.push('/chat')
       }
+
+      this.preload = false
   },
 
   methods: {
@@ -59,7 +62,9 @@ export default {
 
 <template lang="pug">
 div.form-template-center
-  div.modal
+  div.modal(v-if="preload")
+    span Загрузка...
+  div.modal(v-else)
     form(@submit.prevent="handleSubmit")
       .modal__title: h3 Авторизоваться
       .modal__content
@@ -102,15 +107,15 @@ div.form-template-center
 </template>
 
 <style scoped>
-.error-message {
-  color: #ff4444;
-  margin: 10px 0;
-  text-align: center;
-  font-size: 14px;
-}
+  .error-message {
+    color: #ff4444;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 14px;
+  }
 
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 </style>

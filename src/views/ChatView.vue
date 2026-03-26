@@ -16,7 +16,7 @@
 
                   .chat-history__item(v-for="item in history" :key="item.id")
                     .chat-history__id(data-title="ID" @click.prevent="copyToBuffer(item.object_id)") {{ item.object_id }}
-                    .chat-history__date(data-title="Дата") {{formatDate(item.created_at) }}
+                    .chat-history__date(data-title="Дата") {{formatDate(item.created_at, '-3') }}
 
                     .chat-history__link( v-if="item.pdf_link" data-title="Ссылка") 
                       a( v-for="link in item.pdf_link.split(',')" :href="link" target="_blank") 
@@ -46,6 +46,7 @@
                 placeholder="Введите ID объекта"
                 :disabled="loading || !getToken()"
                 @input.prevent="validateObjectId"
+                @blur="onBlurHelper"
               )
               .chat-form__btn
                 button.btn.btn-green(
@@ -249,30 +250,36 @@ export default {
     },
 
     formatDate(dateStr, offset = null) {
-      
       const [d, m, y, h, min] = dateStr.split(/[.\s:]/);
-
-      // Создаем дату с учетом смещения
-      let date = new Date(Date.UTC(y, m - 1, d, h - (offset || 0), min));
-      let now = new Date();
-
+      let date = new Date(y, m - 1, d, h, min);
       if (offset !== null) {
-        now = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + offset * 3600000);
+        date = new Date(date.getTime() - offset * 3600000);
       }
-
-      const time = `${h.padStart(2, '0')}:${min.padStart(2, '0')}`;
+      let now = new Date();
+      if (offset !== null) {
+        now = new Date(now.getTime() - offset * 3600000);
+      }
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const time = `${hours}:${minutes}`;
+      
       const isToday = date.toDateString() === now.toDateString();
       const isYesterday = new Date(now.setDate(now.getDate() - 1)).toDateString() === date.toDateString();
-
+      
       if (isToday) return `сегодня в ${time}`;
       if (isYesterday) return `вчера в ${time}`;
-
+      
       const months = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
       const monthName = months[parseInt(m) - 1];
       const currentYear = new Date().getFullYear();
-
+      
       return parseInt(y) === currentYear ? `${parseInt(d)} ${monthName} ${time}` : `${parseInt(d)} ${monthName} ${y} в ${time}`;
+    },
 
+    onBlurHelper() {
+      window.scrollTo({
+        top: 0
+      })
     }
 
     }

@@ -1,3 +1,3 @@
 export const config = {
-    api: 'https://bot.metrium-premium.ru/api/'
+    api: 'https://bot-admin.metrium-premium.ru/api/' 
 } 
